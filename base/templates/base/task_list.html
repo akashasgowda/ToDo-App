@@ -1,0 +1,66 @@
+{% extends 'base/main.html'%}
+
+{% block content %}
+<div class="header-bar">
+    <div>
+        <img src="https://cdn-icons-png.flaticon.com/128/1177/1177568.png" alt="user_icon" class="user-icon">
+        <h1 class="user-name">Hello {{request.user.username}}</h1>
+        <h3 style="margin:5px 0px 0px 10px">You have <i>{{count}}</i> completed tasks</h3>
+    </div>
+    
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>
+
+<div class="search-add-wrapper">
+    <form method="GET" class="form">
+        <input class="search-bar" "type="text" name="search-area" value="{{search_input}}">
+        <input class="search-btn " type="submit" value="Search">
+    </form>
+    <a id="add-task" href="{% url 'task-create' %}">Add Task</a>
+</div>
+
+
+<div class="task-items-wrapper">
+    {% for task in tasks %}
+        <div class="task-wrapper">
+            {% if task.status == 'DONE' %}
+                <div class="task-title">
+                    <div class="task-done-icon"></div>
+                    <i><s>{{task}}</s></i>
+                </div>
+
+            {% elif task.status == 'WORKING' %}
+            <div class="task-title">
+                <div class="task-working-icon"></div>
+                <i><a href="{% url 'task-update' task.id %}">{{task}}</a></i>
+            </div>
+            <a class="edit" href="{% url 'task-update' task.id %}"><img src="https://cdn-icons-png.flaticon.com/128/1828/1828270.png" width="30px" height="30px"/></a>
+
+            {% elif task.status == 'OVERDUE' %}
+            <div class="task-title">
+                <div class="task-overdue-icon"></div>
+                <i><a href="{% url 'task-update' task.id %}">{{task}}</a></i>
+            </div>
+            <a class="edit" href="{% url 'task-update' task.id %}"><img src="https://cdn-icons-png.flaticon.com/128/1828/1828270.png" width="30px" height="30px"/></a>
+
+            {% else %}
+            <div class="task-title">
+                <div class="task-incomplete-icon"></div>
+                <i><a href="{% url 'task-update' task.id %}">{{task}}</a></i>
+            </div>
+            <a class="edit" href="{% url 'task-update' task.id %}"><img src="https://cdn-icons-png.flaticon.com/128/1828/1828270.png" width="30px" height="30px"/></a>
+            {% endif %}
+            <a class="" href="{% url 'task-delete' task.id %}"><img src="https://cdn-icons-png.flaticon.com/128/3177/3177433.png" width="30px" height="30px"/></a>
+        </div>
+
+        {% empty %}
+        <h3>No items in the List</h3>
+        {% endfor %}
+</div>
+
+
+{% endblock content %}

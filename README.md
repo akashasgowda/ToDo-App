@@ -1,7 +1,7 @@
-#ToDo
+# ToDo
 This is a To-Do-App built using Django Python framework that helps to manage your tasks and increase your productivity.
 
-##Installation
+## Installation
 After cloning the project you can  install the following accordingly:
 ```bash
 pip install django
@@ -18,7 +18,7 @@ python manage.py createsuperuser
 ```
 Provide the credentials properly.
 
-##Running Application
+## Running Application
 To run the app enter following command in the terminal:
 ```bash
 python manage.py runserver
